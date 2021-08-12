@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display a random image.</title>
+    <style type="text/css">
+    #container {
+	margin: 0px auto;
+	width: 500px;
+	height: 375px;
+	border: 10px #333 solid;
+}
+#videoElement {
+	width: 500px;
+	height: 375px;
+	background-color: #666;
+}
+    </style>
+</head>
+
+<body>
+  <div id="container">
+    <video autoplay="true" id="videoElement">
+    
+    </video>
+  </div>
+
+      <div>
+        <button id="jsstyle" 
+        onclick="display_random_image();">Show Image</button> 
+      </div>
+      <script>
+        var video = document.querySelector("#videoElement");
+
+      if (navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia({ video: true })
+          .then(function (stream) {
+           video.srcObject = stream;
+          })
+          .catch(function (err0r) {
+            console.log("Something went wrong!");
+          });
+      }
+
+
+
+        function display_random_image() 
+        {
+            var theImages = [{
+            src: "../Proj/숟가락.jpg",
+            width: "500",
+            height: "343"
+        }, {
+              src: "../Proj/컵.jpg",
+              width: "500",
+              height: "343"
+    }, {
+              src: "../Proj/비누.jpg",
+              width: "500",
+              height: "343"
+                       
+    },{
+              src: "../Proj/곰인형.jpg",
+              width: "500",
+              height: "343"
+    },{
+              src: "../Proj/포크.jpg",
+              width: "500",
+              height: "343"
+    }];
+    
+      var preBuffer = [];
+      for (var i = 0, j = theImages.length; i < j; i++) {
+          preBuffer[i] = new Image();
+          preBuffer[i].src = theImages[i].src;
+         preBuffer[i].width = theImages[i].width;
+          preBuffer[i].height = theImages[i].height;
+      }
+   
+      // create random image number
+      function getRandomInt(min,max) 
+      {
+          //  return Math.floor(Math.random() * (max - min + 1)) + min;
+    
+      imn = Math.floor(Math.random() * (max - min + 1)) + min;
+      return preBuffer[imn];
+      }  
+
+      // 0 is first image,   preBuffer.length - 1) is  last image
+  
+      var newImage = getRandomInt(0, preBuffer.length - 1);
+ 
+      // remove the previous images
+      var images = document.getElementsByTagName('img');
+      var l = images.length;
+      for (var p = 0; p < l; p++) {
+          images[0].parentNode.removeChild(images[0]);
+      }
+      // display the image  
+      document.body.appendChild(newImage);
+      }      
+    </script>
+</body>
+</html>
